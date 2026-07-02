@@ -34,6 +34,7 @@
         <nav class="max-w-6xl mx-auto flex items-center justify-between px-6 py-5">
             <div class="flex items-center gap-3">
                 <div class="bg-white/15 p-2 rounded-xl">
+                    <!-- آیکون داروخانه (SVG ساده) -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v8m-4-4h8M5 21h14a2 2 0 002-2V8.414a2 2 0 00-.586-1.414l-4.414-4.414A2 2 0 0014.586 2H5a2 2 0 00-2 2v15a2 2 0 002 2z" />
                     </svg>
@@ -42,14 +43,26 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <a href="{{ url('/login') }}"
-                   class="px-5 py-2 rounded-lg font-medium text-white hover:bg-white/10 transition">
-                    ورود
-                </a>
-                <a href="{{ url('/register') }}"
-                   class="bg-white text-teal-800 px-5 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
-                    ثبت‌نام
-                </a>
+                @if (Route::has('login'))
+                    @auth
+                        <a href="{{ url('/dashboard') }}"
+                           class="bg-white text-teal-800 px-5 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
+                            رفتن به داشبورد
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}"
+                           class="px-5 py-2 rounded-lg font-medium text-white hover:bg-white/10 transition">
+                            ورود
+                        </a>
+
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}"
+                               class="bg-white text-teal-800 px-5 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
+                                ثبت‌نام
+                            </a>
+                        @endif
+                    @endauth
+                @endif
             </div>
         </nav>
     </header>
@@ -66,10 +79,17 @@
             </p>
 
             <div class="mt-10 flex flex-wrap justify-center gap-4">
-                <a href="{{ url('/login') }}"
-                   class="bg-white text-teal-800 px-8 py-3 rounded-xl font-bold text-lg hover:bg-gray-100 transition shadow-lg">
-                    شروع کار
-                </a>
+                @auth
+                    <a href="{{ url('/dashboard') }}"
+                       class="bg-white text-teal-800 px-8 py-3 rounded-xl font-bold text-lg hover:bg-gray-100 transition shadow-lg">
+                        شروع کار
+                    </a>
+                @else
+                    <a href="{{ route('login') }}"
+                       class="bg-white text-teal-800 px-8 py-3 rounded-xl font-bold text-lg hover:bg-gray-100 transition shadow-lg">
+                        ورود به سیستم
+                    </a>
+                @endauth
             </div>
         </div>
     </section>
